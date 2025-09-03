@@ -1,34 +1,38 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-int binarySearch(int arr[], int n, int target) {
-    int low = 0, high = n - 1;
+// Binary Search function
+bool isPriceAvailable(vector<int>& prices, int targetPrice) {
+    int low = 0, high = prices.size() - 1;
 
     while (low <= high) {
-        int mid = low + (high - low) / 2; // to avoid overflow
+        int mid = low + (high - low) / 2;
 
-        if (arr[mid] == target)
-            return mid; // target found
-        else if (arr[mid] < target)
-            low = mid + 1; // search right half
+        if (prices[mid] == targetPrice)
+            return true; // Price found
+        else if (prices[mid] < targetPrice)
+            low = mid + 1;
         else
-            high = mid - 1; // search left half
+            high = mid - 1;
     }
 
-    return -1; // not found
+    return false; // Price not found
 }
 
 int main() {
-    int arr[] = {2, 4, 6, 8, 10, 12, 14};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int target = 10;
+    // Sorted flight ticket prices (in INR)
+    vector<int> flightPrices = {2500, 3200, 4100, 4800, 5600, 6300, 7100};
 
-    int result = binarySearch(arr, n, target);
+    int targetPrice;
+    cout << "Enter the price you want to check: Rs";
+    cin >> targetPrice;
 
-    if (result != -1)
-        cout << "Element found at index " << result << endl;
+    if (isPriceAvailable(flightPrices, targetPrice))
+        cout << " Ticket available at Rs" << targetPrice << endl;
     else
-        cout << "Element not found" << endl;
+        cout << " No ticket found at Rs" << targetPrice << endl;
 
     return 0;
 }
